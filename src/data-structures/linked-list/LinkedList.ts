@@ -1,17 +1,13 @@
 import LinkedListNode from './LinkedListNode';
 import Comparator from '../../utils/Comparator';
-
-interface FindParams {
-  value: any;
-  callback: Function;
-}
+import FindParams from '../common/FindParams';
 
 export default class LinkedList {
   head: LinkedListNode;
   tail: LinkedListNode;
   compare: Comparator;
 
-  constructor(comparatorFunction: Function) {
+  constructor(comparatorFunction?: Function) {
     this.head = null;
     this.tail = null;
 
@@ -39,6 +35,7 @@ export default class LinkedList {
       return this;
     }
 
+    this.tail.next = newNode;
     this.tail = newNode;
 
     return this;
@@ -159,7 +156,7 @@ export default class LinkedList {
     return nodes;
   }
 
-  toString(callback: Function):string {
+  toString(callback?: Function):string {
     return this.toArray().map(node => node.toString(callback)).toString();
   }
 

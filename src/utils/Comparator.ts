@@ -1,8 +1,8 @@
 export default class Comparator {
   compare: Function;
 
-  constructor(compareFunction: Function) {
-    this.compare = compareFunction ||Comparator.defaultCompareFunction;
+  constructor(compareFunction?: Function) {
+    this.compare = compareFunction || Comparator.defaultCompareFunction;
   }
 
   static defaultCompareFunction(a: any, b: any): number {
