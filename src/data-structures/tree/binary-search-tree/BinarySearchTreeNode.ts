@@ -65,4 +65,43 @@ export default class BinarySearchTreeNode extends BinaryTreeNode {
   contains(value: any) {
     return !!this.find(value);
   }
+
+  remove(value: any): boolean {
+    const nodeToRemove = this.find(value);
+
+    if (!nodeToRemove) {
+      throw new Error('Item not found in the tree');
+    }
+
+    const { parent } = nodeToRemove;
+
+    if (!nodeToRemove.left && !nodeToRemove.right) {
+      if (parent) {
+        parent.removeChild(nodeToRemove);
+      } else {
+        nodeToRemove.setValue(undefined);
+      }
+    } else if (nodeToRemove.left && nodeToRemove.right) {
+      const nextBiggerNode = nodeToRemove.right.findMin();
+      if (!this.nodeComparator.equal(nextBiggerNode, nodeToRemove.right)) {
+        this.remove(nextBiggerNode.value);
+        nodeToRemove.setValue(nextBiggerNode.value);
+      } else {
+        nodeToRemove.setValue(nodeToRemove.right.value);
+        nodeToRemove.setRight(nodeToRemove.right.right);
+      }
+    }
+
+    nodeToRemove.parent = null;
+
+    return true;
+  }
+
+  findMin(): BinarySearchTreeNode {
+    if (!this.left) {
+      return this;
+    }
+
+    return this.left.findMin();
+  }
 }
