@@ -6,6 +6,7 @@ export default class BinarySearchTreeNode extends BinaryTreeNode {
   nodeValueComparator: Comparator;
   left: BinarySearchTreeNode;
   right: BinarySearchTreeNode;
+  parent: BinarySearchTreeNode;
 
   constructor(value: any = null, compareFunction?: Function) {
     super(value);
