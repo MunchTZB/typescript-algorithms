@@ -3,8 +3,8 @@ import BinarySearchTreeNode from '../binary-search-tree/BinarySearchTreeNode';
 import BinaryTreeNode from '../BinaryTreeNode';
 
 const RED_BLACK_TREE_COLORS = {
-  red: 'red',
-  black: 'black',
+  red: Symbol('red'),
+  black: Symbol('black'),
 };
 
 const COLOR_PROP_NAME = 'color';
@@ -50,10 +50,20 @@ export default class RedBlackTree extends BinarySearchTree {
       }
 
       this.balance(grandParent);
+    } else if (!node.uncle || this.isNodeBlack(node.uncle)) {
+      if (grandParent) {
+        let newGrandParent;
+
+        if (this.nodeComparator.equal(grandParent.left, node.parent)) {
+          if (this.nodeComparator.equal(node.parent.left, node)) {
+            
+          }
+        }
+      }
     }
   }
 
-  leftLeftRotation(grandParentNode: BinarySearchTreeNode|BinaryTreeNode):BinarySearchTreeNode {
+  leftLeftRotation(grandParentNode: BinarySearchTreeNode):BinarySearchTreeNode {
     const grandGrandParent = grandParentNode.parent;
 
     let grandParentNodeIsLeft;
@@ -84,7 +94,35 @@ export default class RedBlackTree extends BinarySearchTree {
     return parentNode;
   }
 
-  makeNodeRed(node: BinarySearchTreeNode|BinaryTreeNode):BinarySearchTreeNode {
+  makeNodeRed(node: BinarySearchTreeNode): BinarySearchTreeNode {
+    node.meta.set(COLOR_PROP_NAME, RED_BLACK_TREE_COLORS.red);
 
+    return node;
+  }
+
+  makeNodeBlack(node: BinarySearchTreeNode): BinarySearchTreeNode {
+    node.meta.set(COLOR_PROP_NAME, RED_BLACK_TREE_COLORS.black);
+
+    return node;
+  }
+
+  isNodeRed(node: BinarySearchTreeNode) {
+    return node.meta.get(COLOR_PROP_NAME) === RED_BLACK_TREE_COLORS.red;
+  }
+
+  isNodeBlack(node: BinarySearchTreeNode) {
+    return node.meta.get(COLOR_PROP_NAME) === RED_BLACK_TREE_COLORS.black;
+  }
+
+  isNodeColored(node: BinarySearchTreeNode) {
+    return this.isNodeRed(node) || this.isNodeBlack(node);
+  }
+
+  swapNodeColors(firstNode: BinarySearchTreeNode, secondNode: BinarySearchTreeNode) {
+    const firstColor = firstNode.meta.get(COLOR_PROP_NAME);
+    const secondColor = secondNode.meta.get(COLOR_PROP_NAME);
+
+    firstNode.meta.set(COLOR_PROP_NAME, secondColor);
+    secondNode.meta.set(COLOR_PROP_NAME, firstColor);
   }
 }
