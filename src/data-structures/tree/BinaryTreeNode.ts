@@ -45,7 +45,7 @@ export default class BinaryTreeNode {
     return this.leftHeight - this.rightHeight;
   }
 
-  get uncle(): BinaryTreeNode {
+  get uncle() {
     if (!this.parent) {
       return undefined;
     }
