@@ -80,11 +80,11 @@ export default class RedBlackTree extends BinarySearchTree {
   }
 
   leftLeftRotation(grandParentNode: BinarySearchTreeNode):BinarySearchTreeNode {
-    const grandGrandParent = grandParentNode.parent;
+    const grandGrandParentNode = grandParentNode.parent;
 
     let grandParentNodeIsLeft;
-    if (grandParentNode) {
-      grandParentNodeIsLeft = this.nodeComparator.equal(grandGrandParent.left, grandParentNode);
+    if (grandGrandParentNode) {
+      grandParentNodeIsLeft = this.nodeComparator.equal(grandGrandParentNode.left, grandParentNode);
     }
 
     const parentNode = grandParentNode.left;
@@ -93,13 +93,13 @@ export default class RedBlackTree extends BinarySearchTree {
 
     parentNode.setRight(grandParentNode);
 
-    grandGrandParent.setLeft(parentRightNode);
+    grandParentNode.setLeft(parentRightNode);
 
-    if (grandGrandParent) {
+    if (grandGrandParentNode) {
       if (grandParentNodeIsLeft) {
-        grandGrandParent.setLeft(parentNode);
+        grandGrandParentNode.setLeft(parentNode);
       } else {
-        grandGrandParent.setRight(parentNode);
+        grandGrandParentNode.setRight(parentNode);
       }
     } else {
       parentNode.parent = null;
@@ -126,11 +126,11 @@ export default class RedBlackTree extends BinarySearchTree {
   }
 
   rightRightRotation(grandParentNode: BinarySearchTreeNode): BinarySearchTreeNode {
-    const grandGrandParent = grandParentNode.parent;
+    const grandGrandParentNode = grandParentNode.parent;
 
     let grandParentNodeIsLeft;
-    if (grandGrandParent) {
-      grandParentNodeIsLeft = this.nodeComparator.equal(grandGrandParent.left, grandParentNode);
+    if (grandGrandParentNode) {
+      grandParentNodeIsLeft = this.nodeComparator.equal(grandGrandParentNode.left, grandParentNode);
     }
 
     const parentNode = grandParentNode.right;
@@ -141,11 +141,11 @@ export default class RedBlackTree extends BinarySearchTree {
 
     grandParentNode.setRight(parentLeftNode);
 
-    if (grandGrandParent) {
+    if (grandGrandParentNode) {
       if (grandParentNodeIsLeft) {
-        grandGrandParent.setLeft(parentNode);
+        grandGrandParentNode.setLeft(parentNode);
       } else {
-        grandGrandParent.setRight(parentNode);
+        grandGrandParentNode.setRight(parentNode);
       }
     } else {
       parentNode.parent = null;
