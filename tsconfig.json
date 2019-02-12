@@ -2,6 +2,9 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "lib": [
+      "es2017"
+    ]
   },
 }
