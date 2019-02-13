@@ -324,12 +324,12 @@ describe('Graph', () => {
       .addEdge(edgeBD);
 
     const verticesIndices = graph.getVerticesIndices();
-    expect(verticesIndices).toEqual({
-      A: 0,
-      B: 1,
-      C: 2,
-      D: 3,
-    });
+    expect(verticesIndices).toEqual(new Map([
+      ['A', 0],
+      ['B', 1],
+      ['C', 2],
+      ['D', 3],
+    ]));
   });
 
   it('should generate adjacency matrix for undirected graph', () => {
