@@ -1,33 +1,25 @@
 import GraphVertex from "./GraphVertex";
 import GraphEdge from "./GraphEdge";
 
-interface VerticesIndices {
-  [propName: string]: number;
-}
-
 export default class Graph {
-  vertices: {
-    [propName: string]: GraphVertex;
-  };
-  edges: {
-    [propName: string]: GraphEdge;
-  };
+  vertices: Map<string, GraphVertex>;
+  edges: Map<string, GraphEdge>;
   isDirected: boolean;
 
   constructor(isDirected = false) {
-    this.vertices = {};
-    this.edges = {};
+    this.vertices = new Map();
+    this.edges = new Map();
     this.isDirected = isDirected;
   }
 
   addVertex(newVertex: GraphVertex): Graph {
-    this.vertices[newVertex.getKey()] = newVertex;
+    this.vertices.set(newVertex.getKey(), newVertex);
 
     return this;
   }
 
   getVertexByKey(vertexKey: string) {
-    return this.vertices[vertexKey];
+    return this.vertices.get(vertexKey);
   }
 
   getNeighbors(vertex: GraphVertex) {
@@ -35,11 +27,11 @@ export default class Graph {
   }
 
   getAllVertices() {
-    return Object.values(this.vertices);
+    return [...this.vertices.values()];
   }
 
   getAllEdges() {
-    return Object.values(this.edges);
+    return [...this.edges.values()];
   }
 
   addEdge(edge: GraphEdge): Graph {
@@ -56,10 +48,10 @@ export default class Graph {
       endVertex = this.getVertexByKey(edge.endVertex.getKey());
     }
 
-    if (this.edges[edge.getKey()]) {
+    if (this.edges.has(edge.getKey())) {
       throw new Error('Edge has already been added before');
     } else {
-      this.edges[edge.getKey()] = edge;
+      this.edges.set(edge.getKey(), edge);
     }
 
     if (this.isDirected) {
@@ -73,8 +65,8 @@ export default class Graph {
   }
 
   deleteEdge(edge: GraphEdge) {
-    if (this.edges[edge.getKey()]) {
-      delete this.edges[edge.getKey()];
+    if (this.edges.get(edge.getKey())) {
+      this.edges.delete(edge.getKey());
     } else {
       throw new Error('Edge not found in graph');
     }
@@ -114,11 +106,11 @@ export default class Graph {
     return this;
   }
 
-  getVerticesIndices(): VerticesIndices {
-    const verticesIndices: VerticesIndices = {};
+  getVerticesIndices(): Map<string, number> {
+    const verticesIndices: Map<string, number> = new Map();
 
     this.getAllVertices().forEach((vertex, index) => {
-      verticesIndices[vertex.getKey()] = index;
+      verticesIndices.set(vertex.getKey(), index);
     });
 
     return verticesIndices;
@@ -134,7 +126,7 @@ export default class Graph {
 
     vertices.forEach((vertex, vertexIndex) => {
       vertex.getNeighbors().forEach(neighbor => {
-        const neighborIndex = verticesIndices[neighbor.getKey()];
+        const neighborIndex = verticesIndices.get(neighbor.getKey());
         adjacencyMatrix[vertexIndex][neighborIndex] = this.findEdge(vertex, neighbor).weight;
       });
     });
@@ -143,6 +135,6 @@ export default class Graph {
   }
 
   toString() {
-    return Object.keys(this.vertices).toString();
+    return [...this.vertices.keys()].toString();
   }
 }
