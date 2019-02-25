@@ -56,7 +56,10 @@ describe('DisjointSetItem', () => {
   });
 
   it('should do basic manipulation with disjoint set item with custom key extractor', () => {
-    const keyExtractor = (value) => {
+    const keyExtractor = (value: {
+      key: String
+      [propName: string]: any
+    }) => {
       return value.key;
     };
 

@@ -4,9 +4,11 @@ export default class DisjointSetItem {
   parent: null | DisjointSetItem;
   children: Map<any, DisjointSetItem>;
 
-  constructor(value: any, keyCallback: Function) {
+  constructor(value: any, keyCallback?: Function) {
     this.value = value;
-    this.keyCallback = keyCallback
+    this.keyCallback = keyCallback;
+    this.parent = null;
+    this.children = new Map();
   }
 
   getKey():any {
@@ -47,7 +49,7 @@ export default class DisjointSetItem {
 
   setParent(
     parentItem: DisjointSetItem,
-    forceSettingParentChild: boolean
+    forceSettingParentChild: boolean = true
   ): DisjointSetItem {
     this.parent = parentItem;
     if (forceSettingParentChild) {
