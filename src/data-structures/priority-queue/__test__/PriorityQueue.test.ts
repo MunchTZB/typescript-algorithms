@@ -45,8 +45,6 @@ describe('PriorityQueue', () => {
     priorityQueue.changePriority(100, 10);
     priorityQueue.changePriority(10, 20);
 
-    console.log(priorityQueue.toString());
-
     expect(priorityQueue.poll()).toBe(200);
     expect(priorityQueue.poll()).toBe(5);
     expect(priorityQueue.poll()).toBe(100);
